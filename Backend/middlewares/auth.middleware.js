@@ -14,6 +14,14 @@ const authUser = async (req, res, next) => {
 
         return res.status(401).json({message:'Unauthorized'});
     }
+
+    // is we have to use BlacklistToken insted of userModel
+    const isBlacklisted = await userModel.findOne({token:token});
+
+    if(isBlacklisted){
+        return res.status(401).json({message:'Unauthorization '});
+    }
+
     // if we find the decoded part then access the catch
     try {
         // with this can find the id of user 

@@ -24,7 +24,7 @@ router.post('/login',[
 router.get('/profile',authMiddleware.authUser, userController.getUserProfile)
 
 //black list the token and then check the if it is black lsit or not 
-
+router.get('/logout',authMiddleware.authUser,userController.logoutUser)
 
 
 module.exports = router;
