@@ -1,6 +1,7 @@
 const express  = require('express');
 const router = express.Router();
 const { body }  = require('express-validator');
+const authMiddleware = require('../middlewares/auth.middleware');
 const userController = require('../controlers/user.controller');
 
 router.post('/register',[
@@ -18,6 +19,12 @@ router.post('/login',[
 ],
     userController.loginUser
 )
+
+// can we directly use like this 
+router.get('/profile',authMiddleware.authUser, userController.getUserProfile)
+
+//black list the token and then check the if it is black lsit or not 
+
 
 
 module.exports = router;
