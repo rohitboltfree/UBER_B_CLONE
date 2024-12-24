@@ -17,7 +17,10 @@ const registerCaptain = async (req, res, next) => {
         return res.status(400).json({message:'Captain already exist'});
     }
 
-    const hashedPassword = await captainModel.hashedPassword(password);
+    // const hashedPassword = await captainModel.hashedPassword(password);
+
+    const hashedPassword = await captainModel.hashPassword(password);
+
     const captain = await captainService.createCaptain({
         firstname: fullname.firstname,
         lastname: fullname.lastname,

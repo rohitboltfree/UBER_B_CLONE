@@ -27,6 +27,6 @@ app.get('/', (req, res) => {
 
 //Route middleware for handling user-related API requests
 app.use('/users',userRoutes);
-app.use('./captains', captainRoutes);
+app.use('/captains', captainRoutes);
 
 module.exports = app;
