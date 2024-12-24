@@ -71,11 +71,17 @@ const captainSchema = new mongoose.Schema({
 
 // we create a method to generate token
 captainSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({_id:this._id}, process.env.JWT_SECRET, {expiresIn:'24h'})
+    const token = jwt.sign({_id:this._id, email:this.email}, process.env.JWT_SECRET, {expiresIn:'24h'})
     return token;
 };
 
 captainSchema.methods.comparePassword = async (password) => {
+    console.log('Provided password:', password);
+console.log('Stored hashed password:', this.password);
+
+    if (!password || !this.password) {
+        throw new Error('Password or hashed password is missing');
+    }
     return await bcrypt.compare(password, this.password);
 }
 
