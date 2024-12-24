@@ -70,22 +70,28 @@ const captainSchema = new mongoose.Schema({
 
 
 // we create a method to generate token
-captainSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({_id:this._id, email:this.email}, process.env.JWT_SECRET, {expiresIn:'24h'})
+captainSchema.methods.generateAuthToken = function (data) {
+    console.log("daat===", data);
+    console.log(process.env.JWT_SECRET)
+    const token = jwt.sign({_id:this._id}, process.env.JWT_SECRET, {expiresIn:'24h'})
+
+    const decode = jwt.verify(token,process.env.JWT_SECRET)
+    console.log("-------------?",token)
+    console.log(decode)
     return token;
 };
 
-captainSchema.methods.comparePassword = async (password) => {
+captainSchema.methods.comparePassword = async function(password)  {
     console.log('Provided password:', password);
-console.log('Stored hashed password:', this.password);
+    console.log('Stored hashed password:', this);
 
-    if (!password || !this.password) {
-        throw new Error('Password or hashed password is missing');
-    }
-    return await bcrypt.compare(password, this.password);
+    // if (!password || !this.password) {
+    //     throw new Error('Password or hashed password is missing');
+    // }
+    return await bcrypt.compare(password, this.password);   
 }
 
-captainSchema.statics.hashPassword = async (password) => {
+captainSchema.statics.hashPassword = async function (password) {
     return await bcrypt.hash(password, 10);
 }
 

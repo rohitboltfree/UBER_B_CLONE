@@ -18,6 +18,7 @@ const authUser = async (req, res, next) => {
     }
 
     // is we have to use BlacklistToken insted of userModel
+    console("===>black------",isBlacklisted)
     const isBlacklisted = await blackListTokenModel.findOne({token:token});
 
     if(isBlacklisted){
@@ -47,19 +48,24 @@ const authUser = async (req, res, next) => {
 }
 
 const authCaptain = async (req, res, next) => {
-    const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+    const token = req.cookies?.token || req.headers.authorization?.split(' ')[1];
+    console.log("Extracted Token:", token);
 
     if(!token){
+        console.log("no token provided");
         return res.status(401).json({message: 'Unauthorized'});
     }
     const isBlacklisted = await blackListTokenModel.findOne({token : token });
 
-    if(!isBlacklisted){
+    console.log("===>black------",isBlacklisted)
+    if(isBlacklisted){
         return res.status(401).json({message: "Unauthorized"});
     }
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log(decoded)
+
         const captain = await captainModel.findById(decoded._id);
         req.captain = captain;
         return next();

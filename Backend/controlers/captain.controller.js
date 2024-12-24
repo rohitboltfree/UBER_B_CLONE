@@ -41,24 +41,77 @@ const registerCaptain = async (req, res, next) => {
 const loginCaptain = async (req, res, next) => {
     const errors = validationResult(req);
 
+    
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()});
     }
 
     const {email, password} = req.body;
     console.log("==>", email,password)
+    if (!email || !password) { return res.status(400).json({ message: "Email and password are required" }); }
+
     const captain = await captainModel.findOne({email}).select('+password');
     
+        if (!captain) {
+        return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    console.log("User password from DB: ", captain.password); console.log("Password from request: ", password);
+
+
     console.log("password",password)
     const isMatch = await captain.comparePassword(password);
     if(!isMatch){
         return res.status(401).json({message: 'Invalid email or password'});
     }
 
-    const token = captainModel.schema.methods.generateAuthToken();
+    const token = captain.generateAuthToken();
     res.cookie('token', token);
     res.status(200).json({token, captain});
 }
+// const loginCaptain = async (req, res, next) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//         return res.status(400).json({ errors: errors.array() });
+//     }
+
+//     const { email, password } = req.body;
+//     console.log("==>", email, password);
+//     if (!email || !password) {
+//         return res.status(400).json({ message: "Email and password are required" });
+//     }
+
+//     try {
+//         const captain = await captainModel.findOne({ email }).select('+password');
+        
+//         if (!captain) {
+//             return res.status(401).json({ message: "Invalid email or password" });
+//         }
+
+//         console.log("User password from DB: ", captain.password);
+//         console.log("Password from request: ", password);
+
+//         // Check if `this.password` is defined
+//         if (!captain.password) {
+//             console.error("captain.password is undefined");
+//             return res.status(500).json({ message: "Password not found in captain object" });
+//         }
+
+//         const isMatch = await captain.comparePassword(password);
+//         if (!isMatch) {
+//             return res.status(401).json({ message: 'Invalid email or password' });
+//         }
+
+//         const token = captain.generateAuthToken();
+//         res.cookie('token', token);
+//         res.status(200).json({ token, captain });
+
+//     } catch (err) {
+//         console.error("Error during login: ", err);
+//         return res.status(500).json({ message: "Internal server error" });
+//     }
+// };
+
 
 const getCaptainProfile = async (req,res,next) => {
     res.status(200).json({captain : req.captain});

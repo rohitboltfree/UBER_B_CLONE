@@ -18,7 +18,6 @@ router.post('/register',[
 
     body('vehicle.vehicleType').isIn(['car','motorcycle','auto']).withMessage('Invalid vehicle type')
 
-
 ],
     captainController.registerCaptain
 )
@@ -30,9 +29,7 @@ router.post('/login', [
     captainController.loginCaptain
 ) 
 
-router.get('/profile',authMiddleware.authCaptain,
-    captainController.getCaptainProfile
-)
+router.get('/profile',authMiddleware.authCaptain,captainController.getCaptainProfile)
 
 router.get('/logout', authMiddleware.authCaptain, captainController.logoutCaptain)
 
