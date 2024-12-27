@@ -45,7 +45,7 @@ const UserLogin = () => {
           <button className='bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2 border w-full text-lg placeholder:text-base ' >Login</button>
           <div className='flex w-full justify-center'>
             <p className='text-center'>If You Are New ? </p>
-            <Link to='/signup' className='text-blue-600'>Create New Accout</Link>
+            <Link to='/signup' className='text-blue-600'>Create New Account</Link>
           </div>
         </form>
 
