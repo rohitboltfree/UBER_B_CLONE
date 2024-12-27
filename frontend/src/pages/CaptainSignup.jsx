@@ -14,7 +14,7 @@ const CaptainSignup = () => {
     e.preventDefault();
     
     setUserData({
-      userName:{
+      fullName:{
         firstName:firstName,
         lastName:lastName
       },
