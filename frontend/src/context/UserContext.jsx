@@ -17,7 +17,7 @@ const UserContext = ({children}) => {
 
     // we have to wrap our whole application using context
     <div>
-      <UserDataContext.Provider value={[user, setUser]}>
+      <UserDataContext.Provider value={{user, setUser}}>
             {children}
       </UserDataContext.Provider>
     </div>
