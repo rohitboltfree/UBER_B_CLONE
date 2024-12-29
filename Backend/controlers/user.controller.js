@@ -79,14 +79,15 @@ const getUserProfile = async (req, res, next) => {
 }
 
 const logoutUser = async (req, res, next) => {
+    console.log("insider logout controller============")
     // first clear cookie
     res.clearCookie('token');
     //clear the token 
     const token = req.cookies?.token || req.headers.authorization?.split(" ")[ 1 ];
-
-    await blacklistTokenModel.create({token});
-
-    res.status(200).json({message:'Logged out'});
+    console.log("logout============>",token)
+    const resp = await blacklistTokenModel.create({token});
+    console.log("============>",resp)
+    res.status(200).json({message:'Logged out',success:true});
 }
 
 module.exports = {

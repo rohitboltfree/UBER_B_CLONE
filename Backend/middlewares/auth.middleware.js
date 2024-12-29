@@ -9,8 +9,8 @@ const captainModel = require('../models/captain.modal');
 const authUser = async (req, res, next) => {
     //we can find token on cookies and header
     //not able to find cookies
-    const token = req.cookies?.token || req.headers.authorization?.split('')[ 1 ] ;
-    console.log(req.headers)
+    const token = req.cookies?.token || req.headers.authorization?.split(' ')[1] ;
+    console.log("middleware===========",req.headers.authorization.split(' '))
     //now we have to decode the token 
     if(!token){
 
@@ -18,7 +18,7 @@ const authUser = async (req, res, next) => {
     }
 
     // is we have to use BlacklistToken insted of userModel
-    console("===>black------",isBlacklisted)
+    // console("===>black------",isBlacklisted)
     const isBlacklisted = await blackListTokenModel.findOne({token:token});
 
     if(isBlacklisted){
