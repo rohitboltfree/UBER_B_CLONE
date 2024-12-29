@@ -47,7 +47,7 @@ const loginCaptain = async (req, res, next) => {
     }
 
     const {email, password} = req.body;
-    console.log("==>", email,password)
+    
     if (!email || !password) { return res.status(400).json({ message: "Email and password are required" }); }
 
     const captain = await captainModel.findOne({email}).select('+password');
@@ -59,7 +59,7 @@ const loginCaptain = async (req, res, next) => {
     console.log("User password from DB: ", captain.password); console.log("Password from request: ", password);
 
 
-    console.log("password",password)
+    
     const isMatch = await captain.comparePassword(password);
     if(!isMatch){
         return res.status(401).json({message: 'Invalid email or password'});
