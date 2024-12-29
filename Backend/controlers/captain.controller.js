@@ -35,7 +35,7 @@ const registerCaptain = async (req, res, next) => {
 
     const token = captain.generateAuthToken();
 
-    res.status(200).json({token, captain});
+    res.status(201).json({token, captain});
 }
 
 const loginCaptain = async (req, res, next) => {
