@@ -126,7 +126,7 @@ const CaptainSignup = () => {
               }}
               className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-sm placeholder:text-sm'
             >
-              <option value="" disabled> Select Vehicle Type</option>
+              <option value="" disabled>Vehicle Type</option>
               <option value="car">Car</option>
               <option value="auto">Auto</option>
               <option value="moto">Moto</option>
