@@ -3,6 +3,10 @@ import 'remixicon/fonts/remixicon.css'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap';
 import LocationSearchPanel from '../Components/LocationSearchPanel';
+import VehiclePanel from '../Components/VehiclePanel';
+import ConfiremedRide from '../Components/ConfiremedRide';
+import LookingForDrive from '../Components/LookingForDrive';
+import WaitingForDriver from '../Components/WaitingForDriver';
 
 const Home = () => {
 
@@ -12,7 +16,13 @@ const Home = () => {
   const panelRef = useRef(null)
   const panelCloseRef = useRef(null)
   const vehiclePanelRef = useRef(null)
+  const confirmRidePanelRef = useRef(null)
+  const vehicleFoundRef = useRef(null)
+  const waitingForDriverRef = useRef(null)
   const [vehiclePanelOpen, setVehiclePanelOpen]= useState(false)
+  const [confirmRidePanel, setConfirmRidePanel] = useState(false)
+  const [VehicleFound, setVehicleFound] = useState(false)
+  const [waitingForDriver, setWaitingForDriver] = useState(false)
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -54,6 +64,51 @@ const Home = () => {
      }
     },
     [vehiclePanelOpen]
+  )
+
+  useGSAP(
+    function(){
+     if(confirmRidePanel){
+      gsap.to(confirmRidePanelRef.current, {
+        transform:'translateY(0)'
+      })
+     }else{
+      gsap.to(confirmRidePanelRef.current, {
+        transform:'translateY(100%)'
+      })
+     }
+    },
+    [confirmRidePanel]
+  )
+
+  useGSAP(
+    function(){
+     if(VehicleFound){
+      gsap.to(vehicleFoundRef.current, {
+        transform:'translateY(0)'
+      })
+     }else{
+      gsap.to(vehicleFoundRef.current, {
+        transform:'translateY(100%)'
+      })
+     }
+    },
+    [VehicleFound]
+  )
+
+  useGSAP(
+    function(){
+     if(waitingForDriver){
+      gsap.to(waitingForDriverRef.current, {
+        transform:'translateY(0)'
+      })
+     }else{
+      gsap.to(waitingForDriverRef.current, {
+        transform:'translateY(100%)'
+      })
+     }
+    },
+    [waitingForDriver]
   )
 
   return (
@@ -124,47 +179,26 @@ const Home = () => {
         </div>
       </div>
 
-      <div ref={vehiclePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full px-3 py-10 pt-14 bg-white'>
-        <h5 onClick={
-          ()=>{
-            setVehiclePanelOpen(false)
-          }
-        } className='p-1 text-center absolute top-0 w-[93%] '><i className='ri-arrow-down-wide-line text-3xl  text-gray-200'></i></h5>
-        <h3 className='text-2xl font-semibold mb-5'>Select Your Ride</h3>
-
-
-        <div className='flex w-full border-2 mb-2 active:border-black rounded-xl p-3 bg-[#eee] justify-center items-center'>
-          <img className='h-[58px] ' src="images/car-logo.png" alt="car" />
-          <div className='w-1/2'>
-            <h4 className='font-medium text-base '>CarRide <span> <i className='ri-user-3-fill'>2</i> </span> </h4>
-            <h5 className='font-medium text-sm'>2 min away</h5>
-            <p className='font-normal text-xs text-gray-600'>Affordable, compact rides</p>
-          </div>
-          <h2 className='text-lg font-semibold'>₹192.20</h2>
-        </div>
-
-
-        <div className='flex w-full border-2 mb-2 active:border-black rounded-xl p-3 bg-[#eee] justify-center items-center'>
-          <img className='h-[58px] ' src="images/bike-img.png" alt="car" />
-          <div className='w-1/2 ml-[-1]'>
-            <h4 className='font-medium text-base '>BikeRide <span> <i className='ri-user-3-fill'>10</i> </span> </h4>
-            <h5 className='font-medium text-sm'>5 min away</h5>
-            <p className='font-normal text-xs text-gray-600'>Affordable, compact rides</p>
-          </div>
-          <h2 className='text-lg font-semibold'>₹82.20</h2>
-        </div>
-
-
-        <div className='flex w-full border-2 mb-2 active:border-black rounded-xl p-3 bg-[#eee] justify-center items-center'>
-          <img className='h-[58px] ' src="images/auto-logo.png" alt="car" />
-          <div className='w-1/2 ml-6'>
-            <h4 className='font-medium text-base '>AdventureRide <span> <i className='ri-user-3-fill'>2</i> </span> </h4>
-            <h5 className='font-medium text-sm'>8 min away</h5>
-            <p className='font-normal text-xs text-gray-600'>Affordable, compact rides</p>
-          </div>
-          <h2 className='text-lg font-semibold'>₹442.20</h2>
-        </div>
+      <div ref={vehiclePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full px-3 py-6 pt-12 bg-white'>
+                <VehiclePanel 
+                setVehiclePanelOpen={setVehiclePanelOpen}
+                setConfirmRidePanel={setConfirmRidePanel} />
       </div>
+      
+      <div ref={confirmRidePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full px-3 py-6 pt-12 bg-white'>
+                <ConfiremedRide 
+                setConfirmRidePanel={setConfirmRidePanel}
+                setVehicleFound={setVehicleFound}  />
+      </div>
+
+      <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 translate-y-full px-3 py-6 pt-12 bg-white'>
+                <LookingForDrive setVehicleFound={setVehicleFound} />
+      </div>
+
+      <div ref={waitingForDriverRef} className='fixed w-full z-10 bottom-0 translate-y-full px-3 py-6 pt-12 bg-white'>
+                <WaitingForDriver setWaitingForDriver={setWaitingForDriver} />
+      </div>
+
 
     </div>
   )
