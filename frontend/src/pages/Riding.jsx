@@ -22,17 +22,17 @@ const Riding = () => {
       </div>
 
       <div className='flex gap-3 justify-between flex-col items-center'>
-        {/* <img className='h-20 ' src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg" alt="" /> */}
+        <img className='h-20 ' src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg" alt="" />
 
         <div className='w-full mt-5 '>
-{/* 
+
           <div className='flex items-center gap-6 p-3 border-b-2  '>
             <i className='text-lg ri-map-pin-user-fill'></i>
             <div className=''>
               <h3 className='text-lg font-medium'>562/11/A</h3>
               <p className='text-sm -mt-1  text-gray-600 '>Road Rajpur, Dehradun</p>
             </div>
-          </div> */}
+          </div>
 
 
           <div className='flex items-center gap-6 p-3 border-b-2  '>
