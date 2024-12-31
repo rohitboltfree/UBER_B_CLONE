@@ -1,8 +1,30 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import 'remixicon/fonts/remixicon.css'
+import FinishRide from '../Components/FinishRide'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
 
 const CaptainRiding = (props) => {
+
+  const [finishRidePanel, setFinishRidePanel ]= useState(false)
+  const finishRidePanelRef = useRef(null)
+
+  useGSAP(
+    function () {
+      if (finishRidePanel) {
+        gsap.to(finishRidePanelRef.current, {
+          transform: 'translateY(0)'
+        })
+      } else {
+        gsap.to(finishRidePanelRef.current, {
+          transform: 'translateY(100%)'
+        })
+      }
+    },
+    [finishRidePanel]
+  )
+
   return (
     <div className='h-screen relative'>
     
@@ -18,7 +40,11 @@ const CaptainRiding = (props) => {
       <img className='h-full w-full object-cover' src="images/map.jpg" alt="temporary image" />
     </div>
 
-    <div className='h-1/5  p-6 flex relative items-center justify-between bg-yellow-400  '>
+    <div onClick={
+                () => {
+                    setFinishRidePanel(true)
+                }
+            }  className='h-1/5  p-6 flex relative items-center justify-between border-yellow-300 border-2  '>
 
     <h5 onClick={
                 () => {
@@ -29,6 +55,11 @@ const CaptainRiding = (props) => {
         <h4 className='text-lg font-semibold items-center  '> 4km away </h4>
         <button className='flex justify-center  w-[65%] mt-5 text-white bg-[#80ef80] font-semibold p-3 rounded-lg'> Complete Ride</button>
     </div>
+
+    <div ref={finishRidePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+          <FinishRide  
+              setFinishRidePanel={setFinishRidePanel} />
+        </div>
 
 
   </div>

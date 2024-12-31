@@ -15,7 +15,7 @@ const RidePopUp = (props) => {
 
 
 
-                <div className='flex items-center justify-between  bg-yellow-300 rounded-lg w-full p-4 mt-2'>
+                <div className='flex items-center justify-between  border-yellow-300 border-2 rounded-lg w-full p-4 mt-2'>
                     <div className='flex items-center gap-3 '>
                         <img className='h-14 w-12  object-center rounded-full' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv_O_FmLwtxhqhCfThJBk3_aZR1Vl6r1NCGA&s" alt="" />
                         <h2 className='text-lg font-medium'>Rina</h2>

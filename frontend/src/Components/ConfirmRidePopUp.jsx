@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import 'remixicon/fonts/remixicon.css'
 
 const ConfirmRidePopUp = (props) => {
+
+    const [otp, setOtp] = useState('')
+
+    const submitHandler =(e)=>{
+        e.preventDefault()
+    }
+
     return (
         <div >
             <h5 onClick={
@@ -16,7 +23,7 @@ const ConfirmRidePopUp = (props) => {
 
 
 
-                <div className='flex items-center justify-between  bg-yellow-300 rounded-lg w-full p-4 mt-2'>
+                <div className='flex items-center justify-between  border-yellow-300 border-2 rounded-lg w-full p-4 mt-2'>
                     <div className='flex items-center gap-3 '>
                         <img className='h-14 w-12  object-center rounded-full' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv_O_FmLwtxhqhCfThJBk3_aZR1Vl6r1NCGA&s" alt="" />
                         <h2 className='text-lg font-medium'>Rina</h2>
@@ -57,15 +64,31 @@ const ConfirmRidePopUp = (props) => {
 
                     </div>
 
-                    <Link to='/captain-rinding' className='flex justify-center  w-full mt-5 text-white bg-[#80ef80] font-semibold p-3 rounded-lg '>Confirm</Link>
 
-                    <button onClick={
-                        () => {
-                            
-                            props.setRidePopupPanel(false)
-                            props.setConfirmRidePopupPanel(false)
-                        }
-                    } className='w-full mt-2 text-white bg-red-400 font-semibold p-3 rounded-lg '>Cancel</button>
+                    <div className='mt-6  w-full'>
+                        <form onSubmit={ (e)=>{
+                            submitHandler(e)
+                        } }>
+
+                            <input 
+                            value={otp}
+                            onChange={ (e)=>setOtp(e.target.value) }
+                            type="text"
+                            placeholder='Enter OTP'
+                            className='bg-[#eee] px-6 font-mono py-4 text-lg rounded-md placeholder:text-base w-full mt-5'/>
+
+                            <Link to='/captain-rinding' className='flex justify-center text-lg  w-full mt-5 text-white bg-[#80ef80] font-semibold p-3 rounded-lg '>Confirm</Link>
+
+                            <button onClick={
+                                () => {
+
+                                    props.setRidePopupPanel(false)
+                                    props.setConfirmRidePopupPanel(false)
+                                }
+                            } className='w-full text-lg mt-2 text-white bg-red-400 font-semibold p-3 rounded-lg '>Cancel</button>
+
+                        </form>
+                    </div>
 
                 </div>
 
