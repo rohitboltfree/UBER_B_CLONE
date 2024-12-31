@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import 'remixicon/fonts/remixicon.css'
 
 const ConfirmRidePopUp = (props) => {
@@ -56,12 +57,7 @@ const ConfirmRidePopUp = (props) => {
 
                     </div>
 
-                    <button onClick={
-                        () => {
-
-                            props.setRidePopupPanel(false)
-                        }
-                    } className='w-full mt-5 text-white bg-[#80ef80] font-semibold p-2 rounded-lg '>Confirm</button>
+                    <Link to='/captain-rinding' className='flex justify-center  w-full mt-5 text-white bg-[#80ef80] font-semibold p-3 rounded-lg '>Confirm</Link>
 
                     <button onClick={
                         () => {
@@ -69,7 +65,7 @@ const ConfirmRidePopUp = (props) => {
                             props.setRidePopupPanel(false)
                             props.setConfirmRidePopupPanel(false)
                         }
-                    } className='w-full mt-2 text-white bg-red-400 font-semibold p-2 rounded-lg '>Cancel</button>
+                    } className='w-full mt-2 text-white bg-red-400 font-semibold p-3 rounded-lg '>Cancel</button>
 
                 </div>
 
