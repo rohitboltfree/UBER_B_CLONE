@@ -57,7 +57,7 @@ const ConfirmRidePopUp = (props) => {
                             <i className='text-lg ri-currency-line'></i>
                             <div className=''>
                                 <h3 className='text-lg font-medium'>193.20</h3>
-                                <p className='text-sm -mt-1  text-gray-600 '>Cash Cash</p>
+                                <p className='text-sm -mt-3  text-gray-600 '>Cash Cash</p>
                             </div>
                         </div>
 
@@ -65,7 +65,7 @@ const ConfirmRidePopUp = (props) => {
                     </div>
 
 
-                    <div className='mt-6  w-full'>
+                    <div className='mt-4  w-full'>
                         <form onSubmit={ (e)=>{
                             submitHandler(e)
                         } }>
@@ -75,7 +75,7 @@ const ConfirmRidePopUp = (props) => {
                             onChange={ (e)=>setOtp(e.target.value) }
                             type="text"
                             placeholder='Enter OTP'
-                            className='bg-[#eee] px-6 font-mono py-4 text-lg rounded-md placeholder:text-base w-full mt-5'/>
+                            className='bg-[#eee] px-5 font-mono py-3 text-lg rounded-md placeholder:text-base w-full mt-3'/>
 
                             <Link to='/captain-rinding' className='flex justify-center text-lg  w-full mt-5 text-white bg-[#80ef80] font-semibold p-3 rounded-lg '>Confirm</Link>
 
@@ -85,7 +85,7 @@ const ConfirmRidePopUp = (props) => {
                                     props.setRidePopupPanel(false)
                                     props.setConfirmRidePopupPanel(false)
                                 }
-                            } className='w-full text-lg mt-2 text-white bg-red-400 font-semibold p-3 rounded-lg '>Cancel</button>
+                            } className='w-full text-lg mt-2 text-white bg-red-400 font-semibold py-3 px-5 rounded-lg '>Cancel</button>
 
                         </form>
                     </div>

@@ -70,7 +70,7 @@ const RidePopUp = (props) => {
 
                                 props.setConfirmRidePopupPanel(true)
                             }
-                        } className=' text-white bg-[#80ef80] font-semibold p-2 px-10 rounded-lg '>Accept</button>
+                        } className='mt-2 text-white bg-[#80ef80] font-semibold p-2 px-10 rounded-lg '>Accept</button>
 
                     </div>
 

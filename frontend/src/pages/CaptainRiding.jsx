@@ -52,7 +52,7 @@ const CaptainRiding = (props) => {
                 }
             } className='p-1 text-center absolute top-0 w-[95%] '><i className='ri-arrow-down-wide-line text-3xl  text-gray-200'></i></h5>
 
-        <h4 className='text-lg font-semibold items-center  '> 4km away </h4>
+        <div className='flex justify-center items-center'> <h4 className='text-lg font-semibold items-center justify-center '> 4km away </h4> </div>
         <button className='flex justify-center  w-[65%] mt-5 text-white bg-[#80ef80] font-semibold p-3 rounded-lg'> Complete Ride</button>
     </div>
 
