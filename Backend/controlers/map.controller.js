@@ -10,7 +10,7 @@ module.exports.getCoordinates = async (req, res, next) => {
     }
 
     const { address } = req.query;
-
+    console.log("==============>",address)
     try {
         const coordinates = await mapService.getAddressCoordinate(address);
         res.status(200).json(coordinates);

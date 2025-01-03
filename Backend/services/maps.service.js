@@ -5,21 +5,25 @@ const getDistanceTime = async (origin, destination) => {
         throw new Error('Origin and destination are required');
     }
 
-    const apiKey = 'AlzaSyivzkSLbKimfWKWynv2Omq886cP3nAIL3x';
-    const url = `https://maps.gomaps.pro/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
+    const apiKey = process.env.GOOGLE_MAPS_API ||"AlzaSyivzkSLbKimfWKWynv2Omq886cP3nAIL3x";
+
+    const url = `https://maps.gomaps.pro/maps/api/distancematrix/json?origins=${(origin)}&destinations=${(destination)}&key=${apiKey}`;
 
     try {
         console.log("Request URL:", url);
         const response = await axios.get(url);
         console.log("API Response Status:", response.status);
-        console.log("API Response Data:", response.data);
+        console.log("API Response Data:", JSON.stringify(response.data));
 
-        if (response.data.status === 'OK' && response.data.rows.length > 0) {
+        if (response.data.status === 'OK' ) {
             const element = response.data.rows[0].elements[0];
+            console.log("element",element)
             if (element.status === 'OK') {
                 return {
                     distance: element.distance.text,
-                    duration: element.duration.text
+                    duration: element.duration.text,
+                    distanceValue:element.distance.value,
+                    durationValue:element.duration.value,
                 };
             } else {
                 throw new Error('Unable to fetch distance and duration');
@@ -35,14 +39,17 @@ const getDistanceTime = async (origin, destination) => {
 };
 
 
-module.exports.getAddressCoordinate = async (address) => {
-    
+const getAddressCoordinate = async (address) => {
+    console.log("------------------L>>>>>>>>>>>>")
     const apiKey = process.env.GOOGLE_MAPS_API ||"AlzaSyivzkSLbKimfWKWynv2Omq886cP3nAIL3x";
     const url = `https://maps.gomaps.pro/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
 
     try {
          
-        const response = await axios.get(url);
+        console.log("Request URL: getaddress", url);
+         const response = await axios.get(url); 
+         console.log("API Response Status:", response.status);
+          console.log("API Response Data:", response.data);
          
         if(response.data.status === "OK" && response.data.results.length > 0){
             const location = response.data.results[0].geometry.location;
@@ -92,6 +99,7 @@ const getPlaceSuggestions = async (input) => {
 
 module.exports = {
     getDistanceTime,
-    getPlaceSuggestions
+    getPlaceSuggestions,
+    getAddressCoordinate
 
 };
