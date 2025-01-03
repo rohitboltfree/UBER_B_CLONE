@@ -20,4 +20,12 @@ router.get('/get-distance-time',
     ]
 );
 
+router.get('/get-place-suggestions',
+    [
+        query('input').isString().isLength({min:1}),
+        authMiddleware.authUser,
+        mapController.getPlaceSuggestions
+    ]
+) 
+
 module.exports = router;
