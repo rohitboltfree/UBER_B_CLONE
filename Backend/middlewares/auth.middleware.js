@@ -67,6 +67,7 @@ const authCaptain = async (req, res, next) => {
         console.log(decoded)
 
         const captain = await captainModel.findById(decoded._id);
+        
         req.captain = captain;
         return next();
     } catch (error) {

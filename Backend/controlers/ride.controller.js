@@ -1,5 +1,5 @@
 const rideService = require('../services/ride.service');
-const { body, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 
 
 module.exports.createRide = async (req, res) => {
@@ -11,8 +11,10 @@ module.exports.createRide = async (req, res) => {
     }
 
     const { userId, pickup, destination, vehicleType } = req.body;
-    console.log(destination,pickup)
+    console.log("rooooooooooooooo======>",destination,pickup)
     try {
+
+        // there is an error here we cannot access the user._id because of that we cannot access the user login api token to run create ride we have too use register api 
         const ride = await rideService.createRide({ user: req.user._id,pickup,destination,vehicleType });
         return res.status(200).json(ride);
     } catch (err) {
