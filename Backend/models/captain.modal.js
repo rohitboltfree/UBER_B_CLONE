@@ -70,9 +70,9 @@ const captainSchema = new mongoose.Schema({
 
 
 // we create a method to generate token
-captainSchema.methods.generateAuthToken = function (data) {
-    console.log("daat===", data);
-    console.log(process.env.JWT_SECRET)
+captainSchema.methods.generateAuthToken = function () {
+    console.log(" this captain ===>", this._id)
+
     const token = jwt.sign({_id:this._id}, process.env.JWT_SECRET, {expiresIn:'24h'})
 
     const decode = jwt.verify(token,process.env.JWT_SECRET)

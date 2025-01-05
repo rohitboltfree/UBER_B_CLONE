@@ -27,10 +27,23 @@ const Home = () => {
   const [pickupSuggestions, setPickupSuggestions] = useState([]);
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
   const [activeField, setActiveField] = useState(null);
+  const [fare, setFare] = useState({});
 
-  function findTrip(){
+ async function findTrip(){
      setVehiclePanelOpen(true);
         setPanelOpen(false);
+
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`, {
+             params:{
+              pickup, destination
+             },
+             headers:{
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+      )
+
+      console.log("fare data to select ride ", response.data)
   }
 
   const handlePickupChange = async (e) => {
@@ -201,6 +214,7 @@ const Home = () => {
 
           <button 
           onClick={
+            
             findTrip
           }
            className='mt-2 text-white w-full bg-[#80ef80] font-semibold p-2 px-10 rounded-lg '>Find Trip</button>

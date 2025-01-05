@@ -26,14 +26,19 @@ module.exports.createRide = async (req, res) => {
 module.exports.getFare = async (req,res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
+
+        console.log("errors in getfare ", errors)
+        
         return res.status(400).json({errors: errors.array()});
     }
     const { pickup,destination } = req.query;
 
+    console.log('pickup,destination', pickup,destination);
+
     try {
         const fare = await rideService.getFare(pickup, destination);
         return res.status(200).json( fare );
-    } catch (error) {
-        return res.status(500).json({ message: error.message });
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
     }
 }
