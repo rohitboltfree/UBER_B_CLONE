@@ -13,7 +13,6 @@ const authUser = async (req, res, next) => {
     console.log("middleware===========",req.headers.authorization.split(' '))
     //now we have to decode the token 
     if(!token){
-
         return res.status(401).json({message:'Unauthorized'});
     }
 

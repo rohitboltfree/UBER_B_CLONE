@@ -19,7 +19,7 @@ const ConfiremedRide = (props) => {
                         <i className='text-lg ri-map-pin-user-fill'></i>
                         <div className=''>
                             <h3 className='text-lg font-medium'>562/11/A</h3>
-                            <p className='text-sm -mt-1  text-gray-600 '>Road Rajpur, Dehradun</p>
+                            <p className='text-sm -mt-1  text-gray-600 '>{props.pickup}</p>
                         </div>
                     </div>
 
@@ -28,7 +28,7 @@ const ConfiremedRide = (props) => {
                         <i className='text-lg ri-map-pin-2-fill'></i>
                         <div className=''>
                             <h3 className='text-lg font-medium'>562/11/A</h3>
-                            <p className='text-sm -mt-1  text-gray-600 '>Road Dehradun</p>
+                            <p className='text-sm -mt-1  text-gray-600 '>{props.destination}</p>
                         </div>
                     </div>
 
@@ -36,7 +36,7 @@ const ConfiremedRide = (props) => {
                     <div className='flex items-center gap-6 p-3  '>
                         <i className='text-lg ri-currency-line'></i>
                         <div className=''>
-                            <h3 className='text-lg font-medium'>193.20</h3>
+                            <h3 className='text-lg font-medium'> ₹{props.fare[props.vehicleType]} </h3>
                             <p className='text-sm -mt-1  text-gray-600 '>Cash Cash</p>
                         </div>
                     </div>
@@ -46,6 +46,7 @@ const ConfiremedRide = (props) => {
 
                 <button onClick={
                     ()=>{
+                       props.createRide()
                        props.setVehicleFound(true) 
                        props.setConfirmRidePanel(false)
                     }
