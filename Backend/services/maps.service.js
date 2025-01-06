@@ -5,7 +5,8 @@ const getDistanceTime = async (origin, destination) => {
         throw new Error('Origin and destination are required');
     }
 
-    const apiKey = process.env.GOOGLE_MAPS_API ||"AlzaSyivzkSLbKimfWKWynv2Omq886cP3nAIL3x";
+    const apiKey = process.env.GOOGLE_MAPS_API ;
+    console.log(apiKey)
 
     const url = `https://maps.gomaps.pro/maps/api/distancematrix/json?origins=${(origin)}&destinations=${(destination)}&key=${apiKey}`;
 
@@ -41,7 +42,7 @@ const getDistanceTime = async (origin, destination) => {
 
 const getAddressCoordinate = async (address) => {
     console.log("------------------L>>>>>>>>>>>>")
-    const apiKey = process.env.GOOGLE_MAPS_API ||"AlzaSyivzkSLbKimfWKWynv2Omq886cP3nAIL3x";
+    const apiKey = process.env.GOOGLE_MAPS_API ;
     const url = `https://maps.gomaps.pro/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
 
     try {
@@ -74,7 +75,7 @@ const getPlaceSuggestions = async (input) => {
         throw new Error('Input is required');
     }
 
-    const apiKey = 'AlzaSyivzkSLbKimfWKWynv2Omq886cP3nAIL3x';
+    const apiKey = process.env.GOOGLE_MAPS_API ;
     const url = `https://maps.gomaps.pro/maps/api/place/queryautocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
 
     try {

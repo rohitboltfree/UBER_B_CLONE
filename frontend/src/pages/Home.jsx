@@ -272,6 +272,7 @@ console.log(" data to create ride ", response.data)
          vehicleType={vehicleType}
          createRide={createRide} 
          destination={destination}
+         setConfirmRidePanel={setConfirmRidePanel}
          setVehicleFound={setVehicleFound} />
       </div>
 

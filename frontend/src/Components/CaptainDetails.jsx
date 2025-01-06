@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import {CaptainDataContext} from '../context/CaptainContext'
 
 const CaptainDetails = () => {
 
-    
+      const { captain } = useContext(CaptainDataContext);
 
   return (
     <div>
@@ -10,7 +11,7 @@ const CaptainDetails = () => {
 
 <div className='flex items-center justify-start gap-3'>
     <img className='h-10 w-10 rounded-full object-cover' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiL2jLGYvgEjTNYW3DljsPgYgY-26gp45-mKcCEkVA8os51gPXSp28m2DkrRPC7KOAPDY&usqp=CAU" alt="" />
-    <h4 className='text-lg font-medium '>Harsh Patel </h4>
+    <h4 className='text-lg font-medium capitalize'>{captain.fullname.firstname + ' ' + captain.fullname.lastname} </h4>
 </div>
 
 <div >

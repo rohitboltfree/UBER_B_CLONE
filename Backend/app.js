@@ -23,14 +23,12 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 
 
-app.get('/', (req, res) => {
-    res.send('hello world');
-});
-
 //Route middleware for handling user-related API requests
 app.use('/users',userRoutes);
 app.use('/captains', captainRoutes);
 app.use('/maps', mapsRoutes);
 app.use('/rides',rideRoutes);
+
+app.get('/', (req, res) => { res.send('Hello, World!'); });
 
 module.exports = app;
