@@ -2,6 +2,9 @@
 const http = require('http');
 const app = require('./app');
 const { initializeSocket } = require('./socket')
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 //Ports are used in the backend to identify a connection endpoint and direct data to a specific service or process
 const port = process.env.PORT || 3000;

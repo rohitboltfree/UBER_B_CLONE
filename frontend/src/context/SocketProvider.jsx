@@ -16,31 +16,32 @@ const SocketProvider = ({children})=>{
              console.log('disconnected from server');
         });
 
-        // return ()=>{
-        //     socket.off('connect');
-        //      socket.off('disconnect');
-        //     // socket.disconnect();
-        // }
+        return ()=>{
+            socket.off('connect');
+             socket.off('disconnect');
+            // socket.disconnect();
+        }
+
      }, []);
 
-     const sendMessage = (eventName, message)=>{
-        socket.emit(eventName,message);
-     };
+    //  const sendMessage = (eventName, message)=>{
+    //     socket.emit(eventName,message);
+    //  };
 
-     const receiveMessage = (eventName, callback)=>{
-        socket.on(eventName,callback);
-     };
+    //  const receiveMessage = (eventName, callback)=>{
+    //     socket.on(eventName,callback);
+    //  };
 
-    //  return ( 
-    //  <SocketContext.Provider value={socket}> 
-    //  {children}
-    //   </SocketContext.Provider> ); 
+     return ( 
+     <SocketContext.Provider value={socket}> 
+     {children}
+      </SocketContext.Provider> ); 
 
-     return (
-        <SocketContext.Provider value={{sendMessage,receiveMessage}}>
-            {children}
-        </SocketContext.Provider>
-     );
+    //  return (
+    //     <SocketContext.Provider value={{sendMessage,receiveMessage}}>
+    //         {children}
+    //     </SocketContext.Provider>
+    //  );
 }
 
 export default SocketProvider;

@@ -17,7 +17,10 @@ const rideRoutes = require('./routes/ride.routes');
 
 
 connectToDb();
-app.use(cors());
+app.use(cors({
+    origin:'http://localhost:5173',
+    credentials:true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
@@ -30,5 +33,24 @@ app.use('/maps', mapsRoutes);
 app.use('/rides',rideRoutes);
 
 app.get('/', (req, res) => { res.send('Hello, World!'); });
+
+app.get('/get-cookie',(req,res)=>{
+    try {
+        console.log("Headers: ", req.headers);
+        console.log("Cookies: ", req.cookies);
+        res.json({
+          cookies: req.cookies,
+        }); //Returns cookie
+      } catch (error) {
+        console.log("Error getting cookie", error);
+      }
+})
+
+app.get("/set-cookie", (req, res) => {
+    res.cookie("jwt", "abcdef123456", {
+      httpOnly: true,
+    });
+    res.json({ message: "Cookie has been set" });
+  });
 
 module.exports = app;

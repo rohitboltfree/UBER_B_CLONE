@@ -9,8 +9,13 @@ const captainModel = require('../models/captain.modal');
 const authUser = async (req, res, next) => {
     //we can find token on cookies and header
     //not able to find cookies
-    const token = req.cookies?.token || req.headers.authorization?.split(' ')[1] ;
-    console.log("middleware===========",req.headers.authorization.split(' '))
+    const token = req.cookies?.token;
+    var cookie = req.headers.cookie;
+
+
+    console.log("cookies=============>",token,req.cookies)
+    console.log("cooooooooooooo",cookie)
+    
     //now we have to decode the token 
     if(!token){
         return res.status(401).json({message:'Unauthorized'});

@@ -36,7 +36,7 @@ const registerUser = async (req, res, next) => {
     const token = user.generateAuthToken();
 
     // we have to create & set token on both login and register
-    res.cookie('token', token);
+    // res.cookie('token', token);
     res.status(201).json({ token, user });
 }
 
@@ -76,6 +76,7 @@ const getUserProfile = async (req, res, next) => {
     // if(!req.user){
     //     return res.status(404).json({message:'User not found'});
     // }
+    console.log("user profile==========>",req.user)
     res.status(200).json(req.user);
 }
 

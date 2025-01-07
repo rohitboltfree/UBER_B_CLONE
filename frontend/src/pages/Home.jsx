@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import 'remixicon/fonts/remixicon.css';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react'
@@ -8,6 +8,10 @@ import VehiclePanel from '../Components/VehiclePanel';
 import ConfiremedRide from '../Components/ConfiremedRide';
 import LookingForDrive from '../Components/LookingForDrive';
 import WaitingForDriver from '../Components/WaitingForDriver';
+import { SocketContext } from '../context/SocketProvider';
+import {UserDataContext} from '../context/UserContext'
+
+
 
 const Home = () => {
 
@@ -29,6 +33,36 @@ const Home = () => {
   const [activeField, setActiveField] = useState(null);
   const [fare, setFare] = useState({});
   const [vehicleType, setVehicleType] = useState(null);
+
+const {socket} = useContext(SocketContext);
+const {user} = useContext(UserDataContext);
+
+useEffect(() => {
+  if (user && user._id) {
+    console.log(`Emitting join event with userId: ${user._id} and userType: user`);
+    if (socket) {
+      socket.emit('join', { userType: 'user', userId: user._id });
+    }
+  } else {
+    console.log('User is not defined yet.');
+  }
+}, [user, socket]);
+
+// useEffect(() => {
+//   console.log('Current user:', user);
+//   console.log('Current socket:', socket);
+//    if (user && user._id) {
+//     console.log(`Emitting join event with userId: ${user._id} and userType: user`); 
+//     if(socket){
+//       socket.emit('join', { userType: 'user', userId: user._id }); 
+//     }
+//   }else {
+//      console.log('User is not defined yet.'); }
+//      }, [user, socket]);
+
+// useEffect( ()=>{
+//   socket.emit('join', {userType:'user', userId: user._id });
+// },[user])
 
  async function findTrip(){
      setVehiclePanelOpen(true);
