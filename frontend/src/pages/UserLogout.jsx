@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import { instance } from '../lib/axios'
+import Cookies from 'js-cookie';
 
 
 const UserLogout = () => {
@@ -10,11 +12,13 @@ const UserLogout = () => {
 
     const handleLogout=async()=>{
         const token = localStorage.getItem('token')
-        const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/logout`,{
+        const resp = await instance.get(`${import.meta.env.VITE_BASE_URL}/users/logout`,{
             headers:{
                 Authorization:`Bearer ${token}`
             }
         })
+        // remove cookie
+        Cookies.remove('token')
         if(resp.data && resp.data.success){
             localStorage.removeItem('token')
             navigate('/login')

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { UserDataContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { instance } from '../lib/axios';
 
 const UserLogin = () => {
 
@@ -26,7 +27,7 @@ const UserLogin = () => {
       password:password
      }
 
-     const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
+     const response = await instance.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
 
     if(response.status === 200){
       const data = response.data

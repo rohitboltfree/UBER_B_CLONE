@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserDataContext } from '../context/UserContext.jsx';
+import { instance } from '../lib/axios.js';
 
 const UserSignup = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +27,7 @@ const UserSignup = () => {
     };
 
     
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser);
+      const response = await instance.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser);
       
       if (response.status === 201) {
         const data = response.data;

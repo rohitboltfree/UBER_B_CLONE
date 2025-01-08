@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { CaptainDataContext } from '../context/CaptainContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { instance } from '../lib/axios';
 
 const CaptainSignup = () => {
 
@@ -40,7 +41,7 @@ const CaptainSignup = () => {
       }
     }
 
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`,captainData)
+    const response = await instance.post(`${import.meta.env.VITE_BASE_URL}/captains/register`,captainData)
 
 
     if(response.status === 201){

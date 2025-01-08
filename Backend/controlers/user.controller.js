@@ -36,7 +36,9 @@ const registerUser = async (req, res, next) => {
     const token = user.generateAuthToken();
 
     // we have to create & set token on both login and register
-    // res.cookie('token', token);
+    res.cookie('token', token,{
+        httpOnly:true
+    });
     res.status(201).json({ token, user });
 }
 
@@ -67,6 +69,9 @@ const loginUser = async (req,res,next) => {
     
     //now we have to renerate token
     const token = userModel.schema.methods.generateAuthToken();
+    res.cookie("token",token,{
+        httpOnly: true
+    })
 
     //then send the response
     res.status(200).json({token,user});

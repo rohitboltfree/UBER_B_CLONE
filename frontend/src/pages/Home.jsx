@@ -1,15 +1,16 @@
+import { useGSAP } from '@gsap/react';
+import axios from 'axios';
+import gsap from 'gsap';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import 'remixicon/fonts/remixicon.css';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react'
-import axios from 'axios';
-import LocationSearchPanel from '../Components/LocationSearchPanel';
-import VehiclePanel from '../Components/VehiclePanel';
 import ConfiremedRide from '../Components/ConfiremedRide';
+import LocationSearchPanel from '../Components/LocationSearchPanel';
 import LookingForDrive from '../Components/LookingForDrive';
+import VehiclePanel from '../Components/VehiclePanel';
 import WaitingForDriver from '../Components/WaitingForDriver';
 import { SocketContext } from '../context/SocketProvider';
-import {UserDataContext} from '../context/UserContext'
+import { UserDataContext } from '../context/UserContext';
+import { instance } from '../lib/axios';
 
 
 
@@ -39,7 +40,7 @@ const {user} = useContext(UserDataContext);
 
 useEffect(() => {
   if (user && user._id) {
-    console.log(`Emitting join event with userId: ${user._id} and userType: user`);
+    console.log(`Emitting join event with userId: ${user._id} and userType: user`,socket);
     if (socket) {
       socket.emit('join', { userType: 'user', userId: user._id });
     }
@@ -68,13 +69,13 @@ useEffect(() => {
      setVehiclePanelOpen(true);
         setPanelOpen(false);
 
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`, {
+        const response = await instance.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`, {
              params:{
               pickup, destination
              },
              headers:{
               Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
+            },
         }
       )
       setFare(response.data)
@@ -82,7 +83,7 @@ useEffect(() => {
   }
 
   async  function createRide(){
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
+    const response = await instance.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
        pickup, destination, vehicleType
       },{
         headers:{
@@ -97,11 +98,11 @@ console.log(" data to create ride ", response.data)
   const handlePickupChange = async (e) => {
     setPickup(e.target.value);
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-place-suggestions`, {
+      const response = await instance.get(`${import.meta.env.VITE_BASE_URL}/maps/get-place-suggestions`, {
         params: { input: e.target.value },
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+        },
       });
       setPickupSuggestions(response.data);
     } catch (error) {
@@ -112,11 +113,11 @@ console.log(" data to create ride ", response.data)
   const handleDestinationChange = async (e) => {
     setDestination(e.target.value);
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-place-suggestions`, {
+      const response = await instance.get(`${import.meta.env.VITE_BASE_URL}/maps/get-place-suggestions`, {
         params: { input: e.target.value },
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+        },
       });
       setDestinationSuggestions(response.data);
     } catch (error) {
