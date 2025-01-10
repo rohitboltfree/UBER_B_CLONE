@@ -1,4 +1,5 @@
 import React from 'react'
+import { instance } from '../lib/axios';
 
 const ConfiremedRide = (props) => {
     return (
@@ -46,9 +47,10 @@ const ConfiremedRide = (props) => {
 
                 <button onClick={
                     ()=>{
-                       props.createRide()
+                       
                        props.setVehicleFound(true) 
                        props.setConfirmRidePanel(false)
+                       props.createRide()
                     }
                 } className='w-full mt-5 text-white bg-[#80ef80] font-semibold p-2 rounded-lg '>Confirm</button>
 

@@ -49,21 +49,6 @@ useEffect(() => {
   }
 }, [user, socket]);
 
-// useEffect(() => {
-//   console.log('Current user:', user);
-//   console.log('Current socket:', socket);
-//    if (user && user._id) {
-//     console.log(`Emitting join event with userId: ${user._id} and userType: user`); 
-//     if(socket){
-//       socket.emit('join', { userType: 'user', userId: user._id }); 
-//     }
-//   }else {
-//      console.log('User is not defined yet.'); }
-//      }, [user, socket]);
-
-// useEffect( ()=>{
-//   socket.emit('join', {userType:'user', userId: user._id });
-// },[user])
 
  async function findTrip(){
      setVehiclePanelOpen(true);
@@ -74,26 +59,46 @@ useEffect(() => {
               pickup, destination
              },
              headers:{
-              Authorization: `Bearer ${localStorage.getItem('token')}`
+              Authorization: `bearer ${localStorage.getItem('token')}`
             },
         }
       )
       setFare(response.data)
-      console.log("fare data to select ride ", response.data)
+      // console.log("fare data to select ride ", response.data)
   }
 
-  async  function createRide(){
-    const response = await instance.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
-       pickup, destination, vehicleType
-      },{
-        headers:{
-          Authorization: `bearer ${localStorage.getItem('token')}` 
-        }
-      }
-)
+  async function createRide() {
+    try {
+        const response = await instance.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
+            pickup,
+            destination,
+            vehicleType
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error('Error creating ride:', error);
+        return error;
+    }
+}
 
-console.log(" data to create ride ", response.data)
-  }
+
+//   async  function createRide(){
+//     const response = await instance.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
+//        pickup, destination, vehicleType
+//       },{
+//         headers:{
+//           Authorization: `Bearer ${localStorage.getItem('token')}` 
+//         }
+//       }
+     
+// )
+
+// console.log(" data to create ride ", response.data)
+//   }
 
   const handlePickupChange = async (e) => {
     setPickup(e.target.value);
@@ -212,12 +217,6 @@ console.log(" data to create ride ", response.data)
     [waitingForDriver]
   )
 
-  // gsap.to(panelRef.current, {
-  //   height: panelOpen ? '70%' : '0%',
-  //   padding: panelOpen ? '24' : '0'
-  // });
-
-
   return (
     <div className='h-screen w-screen overflow-hidden'>
       <img className='w-36 h-26 absolute left-5 top-5' src="https://i.pinimg.com/originals/4b/f3/18/4bf318204a3fea25898a348bc531fef5.png" alt="uber-logo" />
@@ -289,7 +288,7 @@ console.log(" data to create ride ", response.data)
           setConfirmRidePanel={setConfirmRidePanel} />
       </div>
       
-      <div ref={confirmRidePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full px-3 py-6 pt-12 bg-white'>
+      <div ref={confirmRidePanelRef} className='fixed w-full h-screen z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
         <ConfiremedRide
           fare={fare}
           pickup={pickup}
@@ -300,7 +299,7 @@ console.log(" data to create ride ", response.data)
           setVehicleFound={setVehicleFound} />
       </div>
 
-      <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 translate-y-full px-3 py-6 pt-12 bg-white'>
+      <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 translate-y-full px-3 py-6 pt-10 bg-white'>
         <LookingForDrive
          fare={fare}
          pickup={pickup}

@@ -11,7 +11,9 @@ const authUser = async (req, res, next) => {
     //not able to find cookies
     console.log("req cookies=======>",req.cookies)
  const token = req.cookies.token
+ console.log("hehehehehe",token)
     //now we have to decode the token 
+    
     if(!token){
         return res.status(401).json({message:'Unauthorized'});
     }

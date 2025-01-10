@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import CaptainDetails from '../Components/CaptainDetails'
 import RidePopUp from '../Components/RidePopUp'
@@ -6,6 +6,9 @@ import 'remixicon/fonts/remixicon.css'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap';
 import ConfirmRidePopUp from '../Components/ConfirmRidePopUp'
+import { CaptainDataContext } from '../context/CaptainContext'
+// import { instance } from '../lib/axios';
+import { SocketContext } from '../context/SocketProvider'
 
 const CaptainHome = () => {
 
@@ -13,6 +16,16 @@ const CaptainHome = () => {
   const [confirmRidePopupPanel, setConfirmRidePopupPanel] = useState(false)
   const ridePopupPanelRef = useRef(null)
   const confirmRidePopupPanelRef = useRef(null)
+
+const { socket } = useContext(SocketContext)
+const {captain } = useContext(CaptainDataContext)
+
+useEffect( ()=>{
+  socket.emit( 'join', {
+    userId:captain._id,
+    userType:'captain'
+  } )
+},[] )
 
   useGSAP(
     function () {
@@ -52,7 +65,9 @@ const CaptainHome = () => {
 
           <img className='w-16 ' src="https://i.pinimg.com/originals/4b/f3/18/4bf318204a3fea25898a348bc531fef5.png" alt="" />
 
-          <Link to='/captain-home' className='h-15 w-10 bg-[#eee] flex items-center justify-center rounded-full'> <i className='text-2xl font-medium ri-logout-box-r-line'></i></Link>
+          <Link to='/captain-home' className='h-15 w-10 bg-[#eee] flex items-center justify-center rounded-full'>
+           <i className='text-2xl font-medium ri-logout-box-r-line'></i>
+           </Link>
 
         </div>
 
