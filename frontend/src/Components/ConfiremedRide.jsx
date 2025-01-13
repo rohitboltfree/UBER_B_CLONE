@@ -58,5 +58,5 @@ const ConfiremedRide = (props) => {
         </div>
     )
 }
-//comment
+
 export default ConfiremedRide
