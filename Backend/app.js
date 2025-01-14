@@ -38,17 +38,28 @@ app.use('/rides',rideRoutes);
 
 app.get('/', (req, res) => { res.send('Hello, World!'); });
 
-app.get('/get-cookie',(req,res)=>{
-    try {
-        console.log("Headers: ", req.headers);
-        console.log("Cookies: ", req.cookies);
-        res.json({
-          cookies: req.cookies,
-        }); //Returns cookie
-      } catch (error) {
-        console.log("Error getting cookie", error);
-      }
-})
+// app.get('/get-cookie',(req,res)=>{
+//     try {
+//         console.log("Headers: ", req.headers);
+//         console.log("Cookies: ", req.cookies);
+//         res.json({
+//           cookies: req.cookies,
+//         }); //Returns cookie
+//       } catch (error) {
+//         console.log("Error getting cookie", error);
+//       }
+// })
+app.get('/get-cookie', (req, res) => {
+  try {
+      console.log("Headers: ", req.headers);
+      console.log("Cookies: ", req.cookies);
+      res.json({ cookies: req.cookies });
+  } catch (error) {
+      console.error("Error getting cookie:", error);
+      res.status(500).json({ message: 'Server error' });
+  }
+});
+
 
 app.get("/set-cookie", (req, res) => {
     res.cookie("jwt", "abcdef123456", {
