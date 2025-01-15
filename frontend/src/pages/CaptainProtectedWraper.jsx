@@ -18,11 +18,7 @@ const CaptainProtectedWrapper = ({ children }) => {
 
     const fetchCaptainProfile = async () => {
       try {
-        const response = await instance.get(`${import.meta.env.VITE_BASE_URL}/captains/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        const response = await instance.get(`${import.meta.env.VITE_BASE_URL}/captains/profile`);
 
         if (response.status === 200) {
           setCaptain(response.data.captain);

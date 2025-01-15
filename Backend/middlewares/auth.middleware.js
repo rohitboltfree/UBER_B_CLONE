@@ -5,7 +5,7 @@ const blackListTokenModel = require('../models/blacklistToken.model');
 const captainModel = require('../models/captain.modal');
 
 
-// now we have to create token for the auth
+// // now we have to create token for the auth
 const authUser = async (req, res, next) => {
     //we can find token on cookies and header
     //not able to find cookies
@@ -33,7 +33,7 @@ const authUser = async (req, res, next) => {
         const decoded  = jwt.verify(token, process.env.JWT_SECRET);
         console.log('decoded : ', decoded);
         // with the help to user we can find the user
-        const user = await userModel.findById(decoded._id);
+        const user = await userModel.findById(decoded._id).select('+password');
         console.log('docoded._id -------------',decoded._id);
 
         //set the user
@@ -43,10 +43,38 @@ const authUser = async (req, res, next) => {
         return next();
 
     } catch (error) {
+        console.error('Auth error:', error);
         return res.status(401).json({message:'Unauthorized'});
     }
 
 }
+
+
+// const authUser = async (req, res, next) => {
+//     try {
+//         const token = req.cookies.token || req.headers.authorization.split(' ')[1];
+//         if (!token) {
+//             return res.status(401).json({ message: 'No token provided' });
+//         }
+//         const isBlacklisted = await blackListTokenModel.findOne({token:token});
+
+//         if(isBlacklisted){
+//             return res.status(401).json({message:'Unauthorization '});
+//         }
+
+//         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//         req.user = await userModel.findById(decoded._id).select('+password'); 
+//         if (!req.user) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
+
+//         next();
+//     } catch (error) {
+//         console.error('Auth error:', error);
+//         return res.status(401).json({ message: 'Unauthorized' });
+//     }
+// };
+
 
 const authCaptain = async (req, res, next) => {
     const token = req.cookies?.token || req.headers.authorization?.split(' ')[1];

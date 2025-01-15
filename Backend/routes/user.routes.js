@@ -28,10 +28,10 @@ router.post('/refresh-token', authMiddleware.authUser, async (req, res) => {
             return res.status(401).json({ message: 'Unauthorized' });
         }
 
-        const token = user.generateAuthToken(); // Assuming generateAuthToken is a method in your user model
-        res.cookie('token', token, {
+        const token = userModel.schema.methods.generateAuthToken(); // Assuming generateAuthToken is a method in your user model
+        res.cookie("token",token,{
             httpOnly: true
-        });
+        })
         res.status(200).json({ token, user });
     } catch (error) {
         console.error('Error refreshing token:', error);

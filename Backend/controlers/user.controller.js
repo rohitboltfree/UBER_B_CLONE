@@ -68,7 +68,7 @@ const loginUser = async (req,res,next) => {
     }
     
     //now we have to renerate token
-    const token = userModel.schema.methods.generateAuthToken();
+    const token = user.generateAuthToken();
     res.cookie("token",token,{
         httpOnly: true
     })
@@ -96,6 +96,8 @@ const logoutUser = async (req, res, next) => {
     console.log("============>",resp)
     res.status(200).json({message:'Logged out',success:true});
 }
+
+
 
 module.exports = {
     registerUser,

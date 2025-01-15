@@ -11,6 +11,7 @@ import WaitingForDriver from '../Components/WaitingForDriver';
 import { SocketContext } from '../context/SocketProvider';
 import { UserDataContext } from '../context/UserContext';
 import { instance } from '../lib/axios';
+import { useDebounce } from '../hooks/useDebounce';
 
 
 
@@ -58,9 +59,6 @@ useEffect(() => {
              params:{
               pickup, destination
              },
-             headers:{
-              Authorization: `bearer ${localStorage.getItem('token')}`
-            },
         }
       )
       setFare(response.data)
@@ -73,10 +71,6 @@ useEffect(() => {
             pickup,
             destination,
             vehicleType
-        }, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
         });
         return response;
     } catch (error) {
@@ -99,35 +93,43 @@ useEffect(() => {
 
 // console.log(" data to create ride ", response.data)
 //   }
+  const pickupLocation = useDebounce(pickup,700)
+  const destinationLocation = useDebounce(destination,700)
+
+  useEffect(()=>{
+    (async()=>{
+      try {
+        const response = await instance.get(`${import.meta.env.VITE_BASE_URL}/maps/get-place-suggestions`, {
+          params: { input: pickupLocation },
+        });
+        setPickupSuggestions(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    })()
+  },[pickupLocation])
+
+  useEffect(()=>{
+    (async()=>{
+      try {
+        const response = await instance.get(`${import.meta.env.VITE_BASE_URL}/maps/get-place-suggestions`, {
+          params: { input: destinationLocation },
+        });
+        setDestinationSuggestions(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    })()
+  },[destinationLocation])
 
   const handlePickupChange = async (e) => {
     setPickup(e.target.value);
-    try {
-      const response = await instance.get(`${import.meta.env.VITE_BASE_URL}/maps/get-place-suggestions`, {
-        params: { input: e.target.value },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        },
-      });
-      setPickupSuggestions(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+   
   };
 
   const handleDestinationChange = async (e) => {
     setDestination(e.target.value);
-    try {
-      const response = await instance.get(`${import.meta.env.VITE_BASE_URL}/maps/get-place-suggestions`, {
-        params: { input: e.target.value },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        },
-      });
-      setDestinationSuggestions(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    
   };
 
   const submitHandler = (e) => {

@@ -13,9 +13,6 @@ const UserLogout = () => {
     const handleLogout=async()=>{
         const token = localStorage.getItem('token')
         const resp = await instance.get(`${import.meta.env.VITE_BASE_URL}/users/logout`,{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
         })
         // remove cookie
         Cookies.remove('token')
