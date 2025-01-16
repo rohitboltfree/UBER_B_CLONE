@@ -3,7 +3,7 @@ const router = express.Router();
 const { body }  = require('express-validator');
 const authMiddleware = require('../middlewares/auth.middleware');
 const userController = require('../controlers/user.controller');
-const userModel = require('../models/user.model');
+// const userModel = require('../models/user.model');
 
 router.post('/register',[
     body('email').isEmail().withMessage('Invalid Email'),
@@ -21,26 +21,28 @@ router.post('/login',[
     userController.loginUser
 )
 
-router.post('/refresh-token', authMiddleware.authUser, async (req, res) => {
-    try {
-        const user = await userModel.findById(req.user._id);
-        if (!user) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
+// router.post('/refresh-token', authMiddleware.authUser, async (req, res) => {
+//     try {
+//         const user = await userModel.findById(req.user._id);
+//         if (!user) {
+//             return res.status(401).json({ message: 'Unauthorized' });
+//         }
 
-        const token = userModel.schema.methods.generateAuthToken(); // Assuming generateAuthToken is a method in your user model
-        res.cookie("token",token,{
-            httpOnly: true
-        })
-        res.status(200).json({ token, user });
-    } catch (error) {
-        console.error('Error refreshing token:', error);
-        res.status(500).json({ message: 'Server error' });
-    }
-});
+//         const token = userModel.schema.methods.generateAuthToken(); // Assuming generateAuthToken is a method in your user model
+//         res.cookie("token",token,{
+//             httpOnly: true
+//         })
+//         res.status(200).json({ token, user });
+//     } catch (error) {
+//         console.error('Error refreshing token:', error);
+//         res.status(500).json({ message: 'Server error' });
+//     }
+// });
 
 
 // can we directly use like this 
+
+
 router.get('/profile',authMiddleware.authUser, userController.getUserProfile)
 
 //black list the token and then check the if it is black lsit or not 

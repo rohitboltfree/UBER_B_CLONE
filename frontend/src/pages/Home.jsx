@@ -1,5 +1,5 @@
 import { useGSAP } from '@gsap/react';
-import axios from 'axios';
+// import axios from 'axios';
 import gsap from 'gsap';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import 'remixicon/fonts/remixicon.css';
@@ -79,20 +79,6 @@ useEffect(() => {
     }
 }
 
-
-//   async  function createRide(){
-//     const response = await instance.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
-//        pickup, destination, vehicleType
-//       },{
-//         headers:{
-//           Authorization: `Bearer ${localStorage.getItem('token')}` 
-//         }
-//       }
-     
-// )
-
-// console.log(" data to create ride ", response.data)
-//   }
   const pickupLocation = useDebounce(pickup,700)
   const destinationLocation = useDebounce(destination,700)
 
@@ -109,6 +95,8 @@ useEffect(() => {
     })()
   },[pickupLocation])
 
+
+
   useEffect(()=>{
     (async()=>{
       try {
@@ -121,6 +109,8 @@ useEffect(() => {
       }
     })()
   },[destinationLocation])
+
+
 
   const handlePickupChange = async (e) => {
     setPickup(e.target.value);
@@ -135,6 +125,7 @@ useEffect(() => {
   const submitHandler = (e) => {
     e.preventDefault();
   };
+
 
     useGSAP(
     function () {
